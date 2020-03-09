@@ -11,11 +11,18 @@ module.exports = {
     res.json(names)
   },
   async store(req, res) {
-    const { id, username, name, password } = req.body;
+    const {
+      id,
+      username,
+      name,
+      password
+    } = req.body;
+
     const authAdmin = await adminBase.findOne({ _id: id })
     if (!authAdmin) {
       res.send('Token não existe')
     }
+
     const authusername = await adminBase.findOne({ username })
     if (!authusername) {
       adminBase.create({

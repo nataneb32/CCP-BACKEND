@@ -29,11 +29,8 @@ module.exports = {
   },
   async store(req, res) {
     const { _id, username, password } = req.body;
-    console.log({ _id, username, password })
-    const response = await adminBase.findOne({ username, password })
-    console.log(response)
+    const response = await adminBase.findOne({ _id })
     if (!response) {
-      console.log('Ok')
       return res.send('Erro')
     } else {
       res.json({ response, token: generateToken({ id: _id }) })
