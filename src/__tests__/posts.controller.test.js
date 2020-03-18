@@ -2,13 +2,15 @@ const mongoose = require('mongoose')
 const Post = require('../models/SchemaPost')
 const Admin = require('../models/SchemaAdmin')
 const postsController = require('../controllers/postsController')
+const { MongoMemoryServer } = require('mongodb-memory-server')
 
 describe('Posts controller', () => {
     
     beforeAll(async () => {
-        if(!process.env.MONGO_URL)
-            throw Error("O banco de dados na memoria não foi carregado.")
-        await mongoose.connect(process.env.MONGO_URL,{
+        const mongod = new MongoMemoryServer();
+        const uri = await mongod.getUri();
+
+        await mongoose.connect(uri,{
                 useNewUrlParser: true,
                 useUnifiedTopology: true
         })
