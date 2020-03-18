@@ -6,12 +6,12 @@ const authUtils = require('../utils/auth')
 const { MongoMemoryServer } = require('mongodb-memory-server')
 
 
+const mongod = new MongoMemoryServer();
 
  
 describe('Auth Verify', () => {
     
     beforeAll(async () => {
-        const mongod = new MongoMemoryServer();
         const uri = await mongod.getUri();
 
         await mongoose.connect(uri ,{
@@ -28,6 +28,7 @@ describe('Auth Verify', () => {
 
     afterAll(async () => {
         await mongoose.connection.close()
+        await mongod.stop()
     });
 
     
