@@ -9,7 +9,6 @@ module.exports = {
   async show(req, res) {
     let { title } = req.params
     title = title.replace(/_/g, ' ')
-
     const post = await postBase.findOne({ title })
     if (!post) res.status(404).json({ 'message': 'Post não encontrado' })
 
