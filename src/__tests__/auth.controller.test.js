@@ -89,8 +89,12 @@ describe('Auth Verify', () => {
         
         it('should validate',async done => {
             const admin = await Admin.create({username: "user",name: "Usuario",password: "pass"})
-            const req = {}
-
+            const req = {
+                body:{
+                    admin: {}
+                }
+            }
+            
             process.env.secret = "s3cr3t"
             req.headers = []
             req.headers['authorization'] = authUtils.createToken({_id: admin._id})
@@ -102,13 +106,13 @@ describe('Auth Verify', () => {
             res.send = jest.fn(() => {
             })
 
-            const next = jest.fn(async (req,res) => {
-                expect(req.body.admin).toBeTruthy()
-                done()
-            })
+            const next = jest.fn()
 
             await authVerify.index(req, res, next)
+            expect(next).toHaveBeenCalled()
+            expect(res.json).not.toHaveBeenCalled()
             expect(res.send).not.toHaveBeenCalled()
+            done()
         },10000)
         
         it('should not validate a invalid token',async () => {
@@ -130,5 +134,39 @@ describe('Auth Verify', () => {
             await authVerify.index(req, res, next)
             expect(next).not.toHaveBeenCalled()
         })
+        
+        it('should create currentUser in body',async (done) => {
+            const admin = await Admin.create({username: "user",name: "Usuario",password: "pass"})
+            const req = {
+                body:{
+                    admin: {}
+                }
+            }
+            Object.defineProperty(req.body, 'admin', {
+                get: jest.fn(() => 'bar'),
+                set: jest.fn((a) => expect(a).toEqual(expect.objectContaining({_id: admin._id}))
+                )
+              });
+
+            process.env.secret = "s3cr3t"
+            req.headers = []
+            req.headers['authorization'] = authUtils.createToken({_id: admin._id})
+            
+            const res = {}
+            res.status = () => res
+            res.json = jest.fn()
+            res.send = jest.fn()
+
+            const next = jest.fn()
+
+            await authVerify.index(req, res, next)
+            expect(res.send).not.toHaveBeenCalled()
+            expect(res.json).not.toHaveBeenCalled()
+
+
+            expect(next).toHaveBeenCalled()
+            done()
+        })
+        
     })
 })
