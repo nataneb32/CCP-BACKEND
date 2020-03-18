@@ -1,14 +1,13 @@
-const postBase = require('../models/SchemaPost');
-const adminBase = require('../models/SchemaNewAdmin')
+const postBase = require('../models/SchemaPost')
+const adminBase = require('../models/SchemaAdmin')
+
 module.exports = {
   async index(req, res) {
     const data = await postBase.find()
     res.json(data)
   },
-
   async show(req, res) {
     let { title } = req.params
-
     title = title.replace(/_/g, ' ')
 
     const post = await postBase.findOne({ title })
@@ -21,7 +20,7 @@ module.exports = {
     const { title, description, author, id } = req.body;
     const authauthor = await adminBase.find({ _id: id, name: author })
     if (!authauthor) {
-      res.send('Erro')
+      res.status(401).send("Author não é valido")
     }
     await postBase.create({
       title,

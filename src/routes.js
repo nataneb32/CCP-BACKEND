@@ -4,11 +4,13 @@ const PostController = require('./controllers/postsController')
 const authVerify = require('./controllers/authVerify')
 const routes = Router()
 
+routes.post('/auth', authVerify.store)
+routes.get('/admin', AdminController.index)
+routes.use(authVerify.index)
 routes.get('/posts', PostController.index)
 routes.get('/post/:title', PostController.show)
 routes.post('/newpost', PostController.store)
 routes.post('/newadmin', AdminController.store)
-routes.get('/admin', AdminController.index)
-routes.post('/auth', authVerify.index)
-routes.post('/find', authVerify.store)
+
+
 module.exports = routes;
