@@ -8,7 +8,6 @@ module.exports = {
   },
   async show(req, res) {
     let { title } = req.params
-
     title = title.replace(/_/g, ' ')
 
     const post = await postBase.findOne({ title })
