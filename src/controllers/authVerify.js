@@ -1,10 +1,8 @@
 const adminBase = require('../models/SchemaAdmin');
 const jwt = require('jsonwebtoken')
 
-const authconfig = require('./auth.json')
-
 function generateToken(params = {}) {
-  return jwt.sign(params, authconfig.secret, {
+  return jwt.sign(params, process.env.secret, {
     expiresIn: 86400
   })
 }
@@ -31,7 +29,7 @@ module.exports = {
     const { _id, username, password } = req.body;
     const response = await adminBase.findOne({ _id })
     if (!response) {
-      return res.send('Erro')
+      return res.status(401).json(Error("Id do admin invalido."))
     } else {
       res.json({ response, token: generateToken({ id: _id }) })
     }

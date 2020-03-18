@@ -21,7 +21,7 @@ module.exports = {
     const { title, description, author, id } = req.body;
     const authauthor = await adminBase.find({ _id: id, name: author })
     if (!authauthor) {
-      res.send('Erro')
+      res.status(401).json(Error("Author não é valido"))
     }
     await postBase.create({
       title,
