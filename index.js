@@ -7,7 +7,7 @@ const HOST = '0.0.0.0';
 
 const app = express();
 
-mongoose.connect('mongodb://db:27017/civil', {
+mongoose.connect('mongodb://localhost:27017/civil', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
