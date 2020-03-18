@@ -7,16 +7,16 @@ module.exports = {
       const token = req.headers['authorization'].replace("Bearer ",'');
       if(req.body == null) req.body = {}
       const {_id} = authUtils.verifyToken(token) //decodifica o token, se ele não for valido throw a error
+      
       const admin = await adminBase.findById(_id)
 
-      if(admin === null) throw new Error("Token invalido!")
+      if(!admin) throw Error("Token invalido!")
       admin.password = null
       req.body.admin = admin
       next(req, res)
     } catch (error) {
       return res.status(401).send(error.message)
     }
-
   },
 
   async store(req, res) {
