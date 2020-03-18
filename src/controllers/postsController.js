@@ -6,6 +6,17 @@ module.exports = {
     res.json(data)
   },
 
+  async show(req, res) {
+    let { title } = req.params
+
+    title = title.replace(/_/g, ' ')
+
+    const post = await postBase.findOne({ title })
+    if (!post) res.status(404).json({ 'message': 'Post não encontrado' })
+
+    res.json(post)
+  },
+
   async store(req, res) {
     const { title, description, author, id } = req.body;
     const authauthor = await adminBase.find({ _id: id, name: author })

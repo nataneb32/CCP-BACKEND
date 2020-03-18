@@ -5,6 +5,7 @@ const authVerify = require('./controllers/authVerify')
 const routes = Router()
 
 routes.get('/posts', PostController.index)
+routes.get('/post/:title', PostController.show)
 routes.post('/newpost', PostController.store)
 routes.post('/newadmin', AdminController.store)
 routes.get('/admin', AdminController.index)
