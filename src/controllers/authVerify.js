@@ -1,4 +1,4 @@
-const adminBase = require('../models/SchemaNewAdmin');
+const adminBase = require('../models/SchemaAdmin');
 const jwt = require('jsonwebtoken')
 
 const authconfig = require('./auth.json')

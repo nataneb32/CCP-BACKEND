@@ -1,4 +1,4 @@
-const adminBase = require('../models/SchemaNewAdmin')
+const adminBase = require('../models/SchemaAdmin')
 module.exports = {
   async index(req, res) {
     var names = []

@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const newAdmin = new Schema({
+const Admin = new Schema({
   username: {
     type: String,
     required: true
@@ -15,4 +15,4 @@ const newAdmin = new Schema({
   }
 })
 
-module.exports = model('admins', newAdmin)
+module.exports = model('admins', Admin)

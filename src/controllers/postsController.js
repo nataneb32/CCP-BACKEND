@@ -1,5 +1,5 @@
 const postBase = require('../models/SchemaPost');
-const adminBase = require('../models/SchemaNewAdmin')
+const adminBase = require('../models/SchemaAdmin')
 module.exports = {
   async index(req, res) {
     const data = await postBase.find()
