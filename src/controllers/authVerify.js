@@ -4,6 +4,7 @@ const authUtils = require('../utils/auth')
 module.exports = {
   async index(req, res, next) {
     try {
+      if(!req.headers['authorization']) throw Error("Auth token não foi encontrado.")
       const token = req.headers['authorization'].replace("Bearer ",'');
       if(req.body == null) req.body = {}
       const {_id} = authUtils.verifyToken(token) //decodifica o token, se ele não for valido throw a error
