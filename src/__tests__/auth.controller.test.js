@@ -13,7 +13,7 @@ describe('Auth Verify', () => {
     
     beforeAll(async () => {
         const uri = await mongod.getUri();
-
+        mongoose.set('useCreateIndex', true);
         await mongoose.connect(uri ,{
                 useNewUrlParser: true,
                 useUnifiedTopology: true
