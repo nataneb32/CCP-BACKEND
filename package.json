@@ -17,6 +17,7 @@
     "mongoose": "^5.8.10"
   },
   "devDependencies": {
+    "commitizen": "^4.0.3",
     "insomnia-documenter": "^0.3.2",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2",

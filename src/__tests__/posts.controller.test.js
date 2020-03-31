@@ -37,7 +37,9 @@ describe('Posts controller', () => {
             req.body = {
                 title: "Titulo",
                 description: "Descrição",
-                author: admin.name,
+                current:{
+                    name: admin.name
+                },
                 id: admin._id
             }
             const res = {}

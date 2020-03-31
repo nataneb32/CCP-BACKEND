@@ -13,7 +13,7 @@ module.exports = {
 
       if(!admin) throw Error("Token invalido!")
       admin.password = null
-      req.body.admin = admin
+      req.body.current = admin
       next()
     } catch (error) {
       return res.status(401).send(error.message)

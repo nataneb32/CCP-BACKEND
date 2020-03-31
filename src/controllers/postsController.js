@@ -16,16 +16,20 @@ module.exports = {
   },
 
   async store(req, res) {
-    const { title, description, author, id } = req.body;
-    const authauthor = await adminBase.find({ _id: id, name: author })
-    if (!authauthor) {
-      res.status(401).send("Author não é valido")
+    const { title, description } = req.body;
+    try{
+      const post = await postBase.create({
+        title,
+        description,
+        author: req.body.current.name
+      })
+      res.json({ 
+        title: post.title,
+        description: post.description,
+        author: post.author
+      })
+    }catch(err){
+      res.send(err.message)
     }
-    await postBase.create({
-      title,
-      description,
-      author
-    })
-    res.json({ title, description, author })
   }
 }
