@@ -135,14 +135,14 @@ describe('Auth Verify', () => {
             expect(next).not.toHaveBeenCalled()
         })
         
-        it('should create currentUser in body',async (done) => {
+        it('should create currentAdmin in body',async (done) => {
             const admin = await Admin.create({username: "user",name: "Usuario",password: "pass"})
             const req = {
                 body:{
-                    admin: {}
+                    currentUser: {}
                 }
             }
-            Object.defineProperty(req.body, 'admin', {
+            Object.defineProperty(req.body, 'currentUser', {
                 get: jest.fn(() => 'bar'),
                 set: jest.fn((a) => expect(a).toEqual(expect.objectContaining({_id: admin._id}))
                 )

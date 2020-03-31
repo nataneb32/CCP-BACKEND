@@ -1,47 +1,23 @@
-const mongoose = require('mongoose')
 const Post = require('../models/SchemaPost')
 const Admin = require('../models/SchemaAdmin')
 const postsController = require('../controllers/postsController')
-const { MongoMemoryServer } = require('mongodb-memory-server')
-const mongod = new MongoMemoryServer();
+const postService = require('../services/PostServices')
 
 describe('Posts controller', () => {
-    
-    beforeAll(async () => {
-        const uri = await mongod.getUri();
-        mongoose.set('useCreateIndex', true);
-
-        await mongoose.connect(uri,{
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-        })
-
-        
-    })
-
-    beforeEach(async () => {
-        await mongoose.connection.dropDatabase()
-    });
-
-    afterAll(async () => {
-        await mongoose.connection.close()
-        await mongod.stop()
-    });
-
-    
     describe('store', () => {
-        it('should create a Post',async () => {
-            const admin = await Admin.create({username: "user",name: "Usuario",password: "pass"})
+        it('should call createPost',async () => {
+            const admin = {username: "user",name: "Usuario",password: "pass",_id: "asdasdasdasd"}
             const req = {}
-
+            postService.createPost = jest.fn(async post => post)
             req.body = {
                 title: "Titulo",
                 description: "Descrição",
-                current:{
-                    name: admin.name
+                currentAdmin:{
+                    name: admin.name,
+                    _id: admin._id
                 },
-                id: admin._id
             }
+
             const res = {}
 
             res.status = () => res
@@ -49,9 +25,7 @@ describe('Posts controller', () => {
             res.send = jest.fn()
 
             await postsController.store(req,res)
-            const list = await Post.find({}).lean()
-            expect(list).toEqual([expect.objectContaining({title:"Titulo",description: "Descrição"})])
+            expect(postService.createPost).toHaveBeenCalledWith({title: "Titulo",description: "Descrição",author: {name: admin.name,_id: admin._id}})
         })
-    })
-    
+    })    
 })
