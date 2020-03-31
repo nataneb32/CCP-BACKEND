@@ -1,5 +1,6 @@
 const postBase = require('../models/SchemaPost')
 const adminBase = require('../models/SchemaAdmin')
+const postService = require('../services/PostServices')
 
 module.exports = {
   async index(req, res) {
@@ -16,20 +17,11 @@ module.exports = {
   },
 
   async store(req, res) {
-    const { title, description } = req.body;
+    const { title, description, currentAdmin } = req.body;
     try{
-      const post = await postBase.create({
-        title,
-        description,
-        author: req.body.current.name
-      })
-      res.json({ 
-        title: post.title,
-        description: post.description,
-        author: post.author
-      })
+      res.json(await postService.createPost({title, description,author: currentAdmin}))
     }catch(err){
-      res.send(err.message)
+      res.status(400).send(err.message)
     }
   }
 }

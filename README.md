@@ -28,7 +28,10 @@ yarn generate-doc
 ```
 yarn test
 ```
-
+### Fazer um commit usando o commitzen
+```
+yarn commit
+```
 ## Feito em
 
 * [React.js](https://pt-br.reactjs.org/docs/getting-started.html) - Framework web

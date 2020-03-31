@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "test": "jest --coverage",
-    "generate-doc": "insomnia-documenter --config ./insomnia.json --output docs/ && serve docs "
+    "generate-doc": "insomnia-documenter --config ./insomnia.json --output docs/ && serve docs ",
+    "commit": "npx git-cz"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -17,7 +18,11 @@
     "mongoose": "^5.8.10"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "3.1.0",
+    "husky": "^4.2.3",
     "insomnia-documenter": "^0.3.2",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2",
@@ -26,5 +31,15 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
