@@ -17,13 +17,5 @@ const Admin = new Schema({
 })
 
 const modelAdmin = model('Admin', Admin)
-async function setAdmin(){
-  await modelAdmin.findOneAndUpdate({username: "admin"},{name: "Admin",password: "pass"},{
-    new: true,
-    upsert: true
-  })
-
-}
-// setAdmin()
 
 module.exports = modelAdmin
