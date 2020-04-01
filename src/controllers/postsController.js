@@ -4,8 +4,8 @@ const postService = require('../services/PostServices')
 
 module.exports = {
   async index(req, res) {
-    const data = await postBase.find()
-    res.json(data)
+    const data = await postBase.find();
+    res.json(data);
   },
   async show(req, res) {
     let { title } = req.params
@@ -13,7 +13,7 @@ module.exports = {
     const post = await postBase.findOne({ title })
     if (!post) res.status(404).json({ 'message': 'Post não encontrado' })
 
-    res.json(post)
+    res.json(post);
   },
 
   async store(req, res) {
@@ -24,4 +24,4 @@ module.exports = {
       res.status(400).send(err.message)
     }
   }
-}
+};
